@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{% block title %} {% endblock %}</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/font-awesome.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/font.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/li-scroller.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/slick.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/jquery.fancybox.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/theme.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'firstapp/css/categorys.css' %}">
+<!--[if lt IE 9]-->
+<script src="{% static 'firstapp/js/html5shiv.min.js' %}"></script>
+<script src="{% static 'firstapp/js/respond.min.js' %}"></script>
+<!--[endif]-->
+</head>
+<body>
+  <div id="preloader">
+  <div id="status">&nbsp;</div>
+  </div>
+  <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+  <div class="container">
+    <header id="header">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="header_top">
+          <div class="header_top_left">
+            <ul class="top_nav">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+          </div>
+          <div class="header_top_right">
+<!--            <p>{% now 'SHORT_DATETIME_FORMAT' %}</p>-->
+            <p>{% now 'jS F Y H:i' %}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="header_bottom">
+          <div class="logo_area"><a href="/" class="logo"><img src="{% static 'firstapp/images/logo.jpg' %}" alt="not loaded"></a></div>
+          <div class="add_banner"><a href="#"><img src="{% static 'firstapp/images/addbanner_728x90_V1.jpg' %}" alt="alt img not dwnlod"></a></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <section id="navArea">
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav main_nav">
+          <li class="active"><a href="{% url 'home' %}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
+          <li><a href="{% url 'all_category' request2='global' %}">Global</a></li>
+          <li><a href="{% url 'all_category' request2='local' %}">Local</a></li>
+          <li><a href="{% url 'all_category' request2='sport' %}">Sport</a></li>
+          <li><a href="{% url 'all_category' request2='technology' %}">Technology</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+<!--          <li><a href="{% url 'page_404' %}">404 Page</a></li>-->
+        </ul>
+      </div>
+    </nav>
+  </section>
+  <section id="newsSection">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="latest_newsarea"> <span>Latest News</span>
+          <ul id="ticker01" class="news_sticker">
+            {% for i in latest_news_data %}
+            <li><a href="{{ i.get_absolute_url }}"><img src="{{ i.image.url }}" alt="">{{ i.title }}</a></li>
+            {% endfor %}
+          </ul>
+          <div class="social_area">
+            <ul class="social_nav">
+              <li class="facebook"><a href="#"></a></li>
+              <li class="twitter"><a href="#"></a></li>
+              <li class="flickr"><a href="#"></a></li>
+              <li class="pinterest"><a href="#"></a></li>
+              <li class="googleplus"><a href="#"></a></li>
+              <li class="vimeo"><a href="#"></a></li>
+              <li class="youtube"><a href="#"></a></li>
+              <li class="mail"><a href="#"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    {% block content %}
+    {% endblock %}
+
+  <footer id="footer">
+    <div class="footer_top">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInLeftBig">
+            <h2>Flickr Images</h2>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInDown">
+            <h2>Tag</h2>
+            <ul class="tag_nav">
+              {% for category in category_data %}
+                <li><a href="{% url 'all_category' request2=category.name %}">{{ category.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInRightBig">
+            <h2>Contact</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <address>
+            Perfect News,1238 S . 123 St. <br>Suite 25 Town City 3333,USA <br>Phone: 123-326-789 Fax: 123-546-567
+            </address>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer_bottom">
+      <p class="copyright">Copyright &copy; 2045 <a href="index.html">NewsFeed</a></p>
+      <p class="developer">Developed By Wpfreeware</p>
+    </div>
+  </footer>
+
+<script src=" {% static 'firstapp/js/jquery.min.js' %}"></script>
+<script src="{% static 'firstapp/js/wow.min.js' %}"></script>
+<script src="{% static 'firstapp/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'firstapp/js/slick.min.js' %}"></script>
+<script src="{% static 'firstapp/js/jquery.li-scroller.1.0.js' %}"></script>
+<script src="{% static 'firstapp/js/jquery.newsTicker.min.js' %}"></script>
+<script src="{% static 'firstapp/js/jquery.fancybox.pack.js' %}"></script>
+<script src="{% static 'firstapp/js/custom.js' %}"></script>
+
+</div>
+
+</body>
+</html>
