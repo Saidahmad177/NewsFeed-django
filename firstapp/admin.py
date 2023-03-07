@@ -1,5 +1,5 @@
 from django.contrib import admin
-from firstapp.models import NewsBase, Category, Contact, Newmodel
+from firstapp.models import NewsBase, Category, Contact, AllUser
 
 
 @admin.register(NewsBase)
@@ -25,4 +25,8 @@ class ContactModel(admin.ModelAdmin):
     list_display = ['id', 'name', 'email']
 
 
-admin.site.register(Newmodel)
+class Usermodel(admin.ModelAdmin):
+    list_display = ['username', 'email']
+
+
+admin.site.register(AllUser, Usermodel)

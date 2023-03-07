@@ -25,12 +25,15 @@ SECRET_KEY = 'django-insecure-c=35f)b0mb_ho36x)c!om=rhh_7633!*qx!7fh6f-s(gdxc637
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+
+LOGIN_URL = 'login'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,6 +84,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     # 'news.backends.UFModelBackend',
+# ]
+#
+# AUTH_USER_MODEL = 'firstapp.AllUser'
 
 
 # Password validation

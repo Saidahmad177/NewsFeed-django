@@ -1,43 +1,35 @@
-from django.shortcuts import render, get_object_or_404
-from firstapp.models import NewsBase, Category
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+
+from firstapp.models import NewsBase, Category, AllUser
 from firstapp.forms import FormContact
-from django.template import loader
-from django.http import HttpResponse
-from django.views.generic import ListView, TemplateView
+
+from django.views.generic import ListView, TemplateView, DeleteView, UpdateView, CreateView
 
 
-# def home(request):
-#     category = Category.objects.all()
-#     newsbase = NewsBase.published.all().order_by('-publish_time')[:5]
-#     local_news = NewsBase.published.filter(category__name='Mahalliy')[1:3]
-#     local_one = NewsBase.published.filter(category__name='Mahalliy')[:1]
-#
-#     context = {
-#         'newsbase': newsbase,
-#         'category': category,
-#         'local_news': local_news,
-#         'local_one': local_one,
-#     }
-#
-#     return render(request, 'firstapp/first.html', context)
-
-class HomePage(ListView):
+# This is  Home Page View
+class HomePage(LoginRequiredMixin, ListView):
     model = NewsBase
     template_name = 'firstapp/first.html'
     context_object_name = 'newsbase'
 
-    def get_context_data(self, ** kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = Category.objects.all()
+        context['all_element'] = NewsBase.published.all()
         context['local_news'] = NewsBase.published.filter(category__name='local').order_by('-publish_time')[:5]
         context['newsbase'] = NewsBase.published.all().order_by('-publish_time')[:5]
         context['global_news'] = NewsBase.published.filter(category__name='global').order_by('-publish_time')[:5]
         context['technology'] = NewsBase.published.filter(category__name='technology').order_by('-publish_time')[:5]
         context['sport'] = NewsBase.published.filter(category__name='sport').order_by('-publish_time')[:5]
+        context['user'] = self.request.user
 
         return context
 
 
+# This is all Category View
 class Global(TemplateView):
     template_name = 'firstapp/categorys.html'
 
@@ -52,19 +44,9 @@ class Global(TemplateView):
         return context
 
 
-class oddiy(ListView):
-    model = NewsBase
-    template_name = 'oddiy.html'
-    context_object_name = 'oddiy'
-
-    def get_queryset(self):
-        return self.model.published.all().filter(category__name='Sport').order_by('-publish_time')
-
-
-
 # class Global(ListView):
 #     category_model = NewsBase
-#     template_name = 'firstapp/global.html'
+#     template_name = 'firstapp/update.html'
 #     context_object_name = 'global_news'
 #
 #     def get_queryset(self):
@@ -72,55 +54,72 @@ class oddiy(ListView):
 #         return data
 
 
-class ContactPage(TemplateView):
-    template_name = 'contact.html'
+# This is Create function View
+class Create(CreateView):
+    create_data = NewsBase
+    template_name = 'CRUD/create.html'
+    fields = ('title', 'slug', 'body', 'image', 'category', 'status')
+    success_url = 'home'
+
+    def get_queryset(self):
+        return self.create_data.published.all()
+
+
+# This is Update_function View
+class Update(UpdateView):
+    update_data = NewsBase
+    template_name = 'CRUD/update.html'
+    fields = ('title', 'body', 'image', 'category', 'status',)
+    success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        return self.update_data.published.all()
+
+
+# This is Delete function View
+class Delete(DeleteView):
+    delete_data = NewsBase
+    template_name = 'CRUD/delete.html'
+    success_url = reverse_lazy('home')
+
+    def get_queryset(self):
+        return self.delete_data.published.all()
+
+
+# This is Contact page View
+class ContactPage(View):
+    template_name = 'firstapp/contact.html'
 
     def get(self, request, *args, **kwargs):
         form = FormContact()
         context = {
             'form': form
         }
-        return render(request, 'contact.html', context)
+        return render(request, 'firstapp/contact.html', context)
 
     def post(self, request, *args, **kwargs):
         form = FormContact(request.POST)
-        context = {
-            'form': form
-        }
-        if request.method == 'POST' and form.is_valid():
-            form.save()
-            return HttpResponse('dfsadlkfj')
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                return render(request, 'firstapp/contact.html', {'contact_send': True})
 
-        return render(request, 'contact.html', context)
+            else:
+                return render(request, 'firstapp/contact.html', {'error_message': True})
 
 
+# This is 404 page View
 def page_404(request):
     return render(request, '404.html')
 
 
+# This is detail page View
 def detail_page(request, news, category_name):
-    data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
-    context = {
-        'data': data
-    }
-    return render(request, 'firstapp/detail_page.html', context)
+    if request.method == 'GET':
+        data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
+        context = {
+            'data': data,
+        }
+        print(data.category)
+        return render(request, 'firstapp/detail_page.html', context)
 
-
-# def about(request):
-#     return render(request, 'firstapp/about/about.html')
-
-
-# def yangi(request, request2):
-#     yangi_data = get_object_or_404(NewsBase, category__name=request2, status=NewsBase.published.all)
-#     # category_data = get_object_or_404(Category, name=request2)
-#
-#     context = {
-#         'yangi_data': yangi_data,
-#         # 'category_data': category_data,
-#     }
-#     return render(request, 'global.html', context)
-
-
-# class Yangi(TemplateView):
-#     data = NewsBase.published.all()
-#     template_name = 'categorys.html'

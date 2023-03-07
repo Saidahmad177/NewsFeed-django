@@ -1,5 +1,5 @@
 {% extends 'firstapp/base.html' %}
-
+{% load static %}
 
 {% block title %} {{ data.title }} {% endblock %}
 {% block content %}
@@ -14,7 +14,16 @@
               <li class="active">{{ data.title | truncatewords:7 }}</li>
             </ol>
             <h1>{{ data.title }}</h1>
-            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>Wpfreeware</a> <span><i class="fa fa-calendar"></i>{{ data.publish_time }}</span> <a href="{% url 'all_category' request2=data.category %}"><i class="fa fa-tags"></i>{{ data.category | capfirst }}</a> </div>
+            <div class="post_commentbox">
+              <span><i class="fa fa-user"></i></span>
+              <span><i class="fa fa-calendar"></i>{{ data.publish_time }}</span>
+              <a href="{% url 'all_category' request2=data.category %}"><i class="fa fa-tags"></i>{{ data.category | capfirst }}</a>
+              <div style="float:right;">
+                <a href="{% url 'update' data.slug %}"style="margin-right: 15px;"><i class="fa fa-pencil" ></i>Edit</a>
+                <a href="{% url 'delete' data.slug %}" style="margin-right: 10px;"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
+              </div>
+            </div>
+
             <div class="single_page_content"> <img class="img-center" src="{{ data.image.url }}" alt="">
               <p>{{ data.body }}</p>
               <blockquote> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque adipiscing, neque ut pulvinar tincidunt, est sem euismod odio, eu ullamcorper turpis nisl sit amet velit. Nullam vitae nibh odio, non scelerisque nibh. Vestibulum ut est augue, in varius purus. </blockquote>
@@ -31,6 +40,8 @@
               <h4>This is h4 title</h4>
               <h5>This is h5 title</h5>
               <h6>This is h6 Title</h6>
+
+
               <button class="btn default-btn">Default</button>
               <button class="btn btn-red">Red Button</button>
               <button class="btn btn-yellow">Yellow Button</button>

@@ -9,9 +9,9 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="slick_slider">
             {% for i in newsbase %}
-          <div class="single_iteam"> <a href="{{ i.get_absolute_url }}"> <img src="{{ i.image.url }}" alt=""></a>
+          <div class="single_iteam"> <a href="{% url 'detail_page' i.category i.slug %}"> <img src="{{ i.image.url }}" alt=""></a>
             <div class="slider_article">
-              <h2><a class="slider_tittle" href="{{ i.get_absolute_url }}">{{ i.title }}</a></h2>
+              <h2><a class="slider_tittle" href="{% url 'detail_page' i.category i.slug %}">{{ i.title }}</a></h2>
               <p>{{ i.body | truncatewords:11 }}</p>
             </div>
           </div>
@@ -28,8 +28,8 @@
 
               {% for i in newsbase %}
                 <li>
-                  <div class="media"> <a href="{{ i.get_absolute_url }}" class="media-left"> <img alt="" src="{{ i.image.url }}"> </a>
-                    <div class="media-body"> <a href="{{ i.get_absolute_url }}" class="catg_title">{{ i.title }}</a></div>
+                  <div class="media"> <a href="{% url 'detail_page' i.category i.slug %}" class="media-left"> <img alt="" src="{{ i.image.url }}"> </a>
+                    <div class="media-body"> <a href="{% url 'detail_page' i.category i.slug %}" class="catg_title">{{ i.title }}</a></div>
                   </div>
                 </li>
               {% endfor %}
@@ -55,8 +55,8 @@
                   {% if forloop.first %}
 
                     <li>
-                      <figure class="bsbig_fig"> <a href="{{ i.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ i.image.url }}"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="{{ i.get_absolute_url }}">{{ i.title }}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="{% url 'detail_page' i.category i.slug %}" class="featured_img"> <img alt="" src="{{ i.image.url }}"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="{% url 'detail_page' i.category i.slug %}">{{ i.title }}</a> </figcaption>
                         <p>{{ i.body | truncatewords:10 }}</p>
                       </figure>
                     </li>
@@ -69,8 +69,8 @@
                 {% for i in local_news %}
                   {% if forloop.counter > 1 %}
                     <li>
-                      <div class="media wow fadeInDown"> <a href="{{ i.get_absolute_url }}" class="media-left"> <img alt="" src="{{ i.image.url }}"> </a>
-                        <div class="media-body"> <a href="{{ i.get_absolute_url }}" class="catg_title">{{ i.title }}</a> </div>
+                      <div class="media wow fadeInDown"> <a href="{% url 'detail_page' i.category i.slug %}" class="media-left"> <img alt="" src="{{ i.image.url }}"> </a>
+                        <div class="media-body"> <a href="{% url 'detail_page' i.category i.slug %}" class="catg_title">{{ i.title }}</a> </div>
                       </div>
                     </li>
                   {% endif %}
@@ -87,8 +87,8 @@
                   {% for global in global_news %}
                     {% if forloop.first %}
                       <li>
-                        <figure class="bsbig_fig"> <a href="{{ global.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ global.image.url }}"> <span class="overlay"></span> </a>
-                          <figcaption> <a href="{{ global.get_absolute_url }}">{{ global.title }}</a> </figcaption>
+                        <figure class="bsbig_fig"> <a href="{% url 'detail_page' global.category global.slug %}" class="featured_img"> <img alt="" src="{{ global.image.url }}"> <span class="overlay"></span> </a>
+                          <figcaption> <a href="{% url 'detail_page' global.category global.slug %}">{{ global.title }}</a> </figcaption>
                           <p>{{ global.body | truncatewords:10 }}</p>
                         </figure>
                       </li>
@@ -99,8 +99,8 @@
                   {% for global in global_news %}
                     {% if forloop.counter > 1 %}
                       <li>
-                        <div class="media wow fadeInDown"> <a href="{{ global.get_absolute_url }}" class="media-left"> <img alt="" src="{{ global.image.url }}"> </a>
-                          <div class="media-body"> <a href="{{ global.get_absolute_url }}" class="catg_title">{{ global.title }}</a> </div>
+                        <div class="media wow fadeInDown"> <a href="{% url 'detail_page' global.category global.slug %}" class="media-left"> <img alt="" src="{{ global.image.url }}"> </a>
+                          <div class="media-body"> <a href="{% url 'detail_page' global.category global.slug %}" class="catg_title">{{ global.title }}</a> </div>
                         </div>
                       </li>
                     {% endif %}
@@ -115,8 +115,8 @@
                   {% for tech in technology %}
                     {% if forloop.first %}
                       <li>
-                        <figure class="bsbig_fig wow fadeInDown"> <a href="{{ tech.get_absolute_url }}" class="featured_img"> <img alt="" src="{{ tech.image.url }}"> <span class="overlay"></span> </a>
-                          <figcaption> <a href="{{ tech.get_absolute_url }}">{{ tech.title }}</a> </figcaption>
+                        <figure class="bsbig_fig wow fadeInDown"> <a href="{% url 'detail_page' tech.category tech.slug %}" class="featured_img"> <img alt="" src="{{ tech.image.url }}"> <span class="overlay"></span> </a>
+                          <figcaption> <a href="{% url 'detail_page' tech.category tech.slug %}">{{ tech.title }}</a> </figcaption>
                           <p>{{ tech.body | truncatewords:10 }}</p>
                         </figure>
                       </li>
@@ -127,8 +127,8 @@
                   {% for tech in technology %}
                     {% if forloop.counter > 1 %}
                       <li>
-                        <div class="media wow fadeInDown"> <a href="{{ tech.get_absolute_url }}" class="media-left"> <img alt="" src="{{ tech.image.url }}"> </a>
-                          <div class="media-body"> <a href="{{ tech.get_absolute_url }}" class="catg_title">{{ tech.title }}</a> </div>
+                        <div class="media wow fadeInDown"> <a href="{% url 'detail_page' tech.category tech.slug %}" class="media-left"> <img alt="" src="{{ tech.image.url }}"> </a>
+                          <div class="media-body"> <a href="{% url 'detail_page' tech.category tech.slug %}" class="catg_title">{{ tech.title }}</a> </div>
                         </div>
                       </li>
                     {% endif %}
@@ -179,8 +179,8 @@
                 {% for sport in sport %}
                   {% if forloop.first %}
                     <li>
-                      <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{{ sport.get_absolute_url }}"> <img src="{{ sport.image.url }}" alt=""> <span class="overlay"></span> </a>
-                        <figcaption> <a href="{{ sport.get_absolute_url }}">{{ sport.title }}</a> </figcaption>
+                      <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{% url 'detail_page' sport.category sport.slug %}"> <img src="{{ sport.image.url }}" alt=""> <span class="overlay"></span> </a>
+                        <figcaption> <a href="{% url 'detail_page' sport.category sport.slug %}">{{ sport.title }}</a> </figcaption>
                         <p>{{ sport.body | truncatewords:10 }}</p>
                       </figure>
                     </li>
@@ -193,8 +193,8 @@
                 {% for sport in sport %}
                   {% if forloop.counter > 1 %}
                     <li>
-                      <div class="media wow fadeInDown"> <a href="{{ sport.get_absolute_url }}" class="media-left"> <img alt="" src="{{ sport.image.url }}"> </a>
-                        <div class="media-body"> <a href="{{ sport.get_absolute_url }}" class="catg_title">{{ sport.title }}</a> </div>
+                      <div class="media wow fadeInDown"> <a href="{% url 'detail_page' sport.category sport.slug %}" class="media-left"> <img alt="" src="{{ sport.image.url }}"> </a>
+                        <div class="media-body"> <a href="{% url 'detail_page' sport.category sport.slug %}" class="catg_title">{{ sport.title }}</a> </div>
                       </div>
                     </li>
                   {% endif %}
@@ -209,26 +209,17 @@
           <div class="single_sidebar">
             <h2><span>Popular Post</span></h2>
             <ul class="spost_nav">
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{% static 'firstapp/images/post_img1.jpg' %}"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{% static 'firstapp/images/post_img2.jpg' %}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{% static 'firstapp/images/post_img1.jpg' %}"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{% static 'firstapp/images/post_img2.jpg' %}"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                </div>
-              </li>
+              {% for i in newsbase %}
+              'true'
+                  {% if i.category in category.name %}
+                    'true2'
+                    <li>
+                      <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="{% static 'firstapp/images/post_img2.jpg' %}"> </a>
+                        <div class="media-body"> <a href="single_page.html" class="catg_title">{{ i.title }}</a> </div>
+                      </div>
+                    </li>
+                  {% endif %}
+              {% endfor %}
             </ul>
           </div>
           <div class="single_sidebar">

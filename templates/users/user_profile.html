@@ -1,0 +1,63 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+
+      <form class="form-horizontal" method="post"> {% csrf_token %}
+
+    <!-- Form Name -->
+    <h3 style="margin-top: 20px;">MY profile</h3>
+
+      {% if success_message %}
+          <div class="alert alert-success forma" role="alert">
+            Profile update successed
+        </div>
+
+      {% endif %}
+
+     {% if messages %}
+          <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+          </div>
+      {% endif %}
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">Name</label>
+      <div class="col-md-4 forma">
+      <input id="textinput" name="first_name" type="text" placeholder="Enter a name" value="{{ user.first_name }}" class="form-control input-md">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">Username</label>
+      <div class="col-md-4 forma">
+      <input id="textinput" name="username" type="text" placeholder="Enter a username" value="{{ user.username }}" class="form-control input-md">
+
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="textinput">Email</label>
+      <div class="col-md-4 forma">
+      <input id="textinput" name="email" type="email" placeholder="Enter a email" value="{{ user.email }}" class="form-control input-md" readonly>
+
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button id="singlebutton" type="submit" class="btn btn-primary">submit</button>
+          <a style="color: blue; margin-left: 140px;" href="{% url 'password_change' %}">Password change</a>
+      </div>
+    </div>
+    </form>
+
+
+{% endblock %}

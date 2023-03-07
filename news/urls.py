@@ -19,10 +19,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
-    path('', include('firstapp.urls'))
+    path('account/', include('users.urls')),
+    path('', include('firstapp.urls')),
 
 ]
+
+# handler404 = 'firstapp.views.page_404'
+
+# admin.site.site_header = 'Adminstration'
+# admin.site.site_title = 'site admin'
+# admin.site.index_title = 'Site administration'
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

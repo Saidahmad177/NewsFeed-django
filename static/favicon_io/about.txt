@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Kings
+- Font Author: Copyright 2013-2021 The Kings Project Authors (https://github.com/googlefonts/kings)
+- Font Source: http://fonts.gstatic.com/s/kings/v5/8AtnGsK4O5CYXU_Iq6GSPaHS.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

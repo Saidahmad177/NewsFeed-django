@@ -22,7 +22,7 @@
                                 <div class="mn-img">
                                     <img src="{{ i.image.url }}" class="rounded float-left"/>
                                     <div class="mn-title">
-                                        <a href="{{ i.get_absolute_url }}">{{ i.title | truncatewords:8 }}</a>
+                                        <a href="{% url 'detail_page' i.category i.slug %}">{{ i.title | truncatewords:8 }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
               <div role="tabpanel" class="tab-pane active" id="category">
                 <ul>
                   {% for category in category_data %}
-                    <li class="cat-item"><a href="{% url 'all_category' request2=category.name %}">{{ category.name }}</a></li>
+                    <li class="cat-item"><a href="{% url 'all_category' request2=category.name %}">{{ category.name | capfirst }}</a></li>
                   {% endfor %}
                 </ul>
               </div>
@@ -150,7 +150,7 @@
             <select class="catgArchive">
               <option>Select Category</option>
               {% for category in category_data %}
-              <option value="{% url 'all_category' request2=category.name %}">{{ category.name }}</option>
+              <option value="{% url 'all_category' request2=category.name %}">{{ category.name | capfirst }}</option>
               {% endfor %}
             </select>
           </div>

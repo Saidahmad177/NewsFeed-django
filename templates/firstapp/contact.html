@@ -7,9 +7,22 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="contact_area">
+
+            {% if contact_send %}
+              <div class="alert alert-success" role="alert">
+                Thank you for contacting us
+              </div>
+
+            {% elif error_message %}
+              <div class="alert alert-danger" role="alert">
+                Please enter a valid value
+              </div>
+
+            {% endif %}
+
             <h2>Contact Us</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dosectetur adipisicing elit, sed do.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            <form action="#" class="contact_form" method="post">{% csrf_token %}
+            <form class="contact_form" method="post">{% csrf_token %}
               <input class="form-control" type="text" placeholder="Name*" name="name">
 <!--              <input class="form-control" type="text" placeholder="First Name" name="firstname">-->
               <input class="form-control" type="email" placeholder="Email*" name="email">
