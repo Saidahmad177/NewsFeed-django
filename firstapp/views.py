@@ -7,6 +7,7 @@ from firstapp.models import NewsBase, Category, AllUser
 from firstapp.forms import FormContact
 
 from django.views.generic import ListView, TemplateView, DeleteView, UpdateView, CreateView
+from news.custom_permisson import OnlyLoggedSuperUser, PermissionUser
 
 
 # This is  Home Page View
@@ -55,7 +56,7 @@ class Global(TemplateView):
 
 
 # This is Create function View
-class Create(CreateView):
+class Create(PermissionUser, CreateView):
     create_data = NewsBase
     template_name = 'CRUD/create.html'
     fields = ('title', 'slug', 'body', 'image', 'category', 'status')
@@ -115,10 +116,12 @@ def page_404(request):
 
 # This is detail page View
 def detail_page(request, news, category_name):
+    user = request.user
     if request.method == 'GET':
         data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
         context = {
             'data': data,
+            'user': user,
         }
         print(data.category)
         return render(request, 'firstapp/detail_page.html', context)

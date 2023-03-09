@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-from users.forms import SignUp, UpdateProfile
+from users.forms import SignUp, UpdateProfile, ProfileForm
 from django.contrib.auth import authenticate, logout, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
@@ -11,6 +11,8 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from firstapp.models import Category
 from django.contrib.auth.models import User
 from django.contrib import messages
+
+from users.models import Profile
 
 
 # registration view
@@ -75,13 +77,19 @@ def user_logout(request):
 @login_required()
 def profile(request):
     user = request.user
+    form = UpdateProfile(request.POST, instance=request.user)
+    profile_image = ProfileForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+    p_img = Profile.objects.get(user=user)
     context = {
         'user': user,
+        'form': form,
+        'profile_image': profile_image,
+        'p_image': p_img,
+
     }
     if request.method == 'POST':
-        form = UpdateProfile(request.POST, instance=request.user)
 
-        if form.is_valid():
+        if form.is_valid() and profile_image.is_valid():
             username_check = form.cleaned_data.get('username')
             print('user check')
             if username_check == user.username:
@@ -92,7 +100,9 @@ def profile(request):
                 return render(request, 'users/user_profile.html', {'invalid': True})
 
             form.save()
-            return render(request, 'users/user_profile.html', {'success_message': True})
+            profile_image.save()
+
+            return render(request, 'users/user_profile.html', {'success_message': True, 'p_image': p_img})
 
         else:
             print(form.errors)

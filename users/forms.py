@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from users.models import Profile
 
 
 class SignUp(forms.ModelForm):
@@ -8,7 +9,7 @@ class SignUp(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'username', 'email']
+        fields = ['first_name', 'username', 'email', ]
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
@@ -29,6 +30,12 @@ class SignUp(forms.ModelForm):
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError('sdfsdfsdfsdf')
         return username
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['user_image']
 
 
 class UpdateProfile(forms.ModelForm):

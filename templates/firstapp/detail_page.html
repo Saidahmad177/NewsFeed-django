@@ -18,10 +18,12 @@
               <span><i class="fa fa-user"></i></span>
               <span><i class="fa fa-calendar"></i>{{ data.publish_time }}</span>
               <a href="{% url 'all_category' request2=data.category %}"><i class="fa fa-tags"></i>{{ data.category | capfirst }}</a>
-              <div style="float:right;">
+              {% if user.is_superuser %}
+                  <div style="float:right;">
                 <a href="{% url 'update' data.slug %}"style="margin-right: 15px;"><i class="fa fa-pencil" ></i>Edit</a>
                 <a href="{% url 'delete' data.slug %}" style="margin-right: 10px;"><i class="fa fa-trash" aria-hidden="true"></i>Delete</a>
               </div>
+              {% endif %}
             </div>
 
             <div class="single_page_content"> <img class="img-center" src="{{ data.image.url }}" alt="">

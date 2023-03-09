@@ -29,7 +29,7 @@
               {% for i in newsbase %}
                 <li>
                   <div class="media"> <a href="{% url 'detail_page' i.category i.slug %}" class="media-left"> <img alt="" src="{{ i.image.url }}"> </a>
-                    <div class="media-body"> <a href="{% url 'detail_page' i.category i.slug %}" class="catg_title">{{ i.title }}</a></div>
+                    <div class="media-body"> <a href="{% url 'detail_page' i.category i.slug %}" class="catg_title">{{ i.title | truncatewords:4 }}</a></div>
                   </div>
                 </li>
               {% endfor %}
@@ -232,7 +232,7 @@
               <div role="tabpanel" class="tab-pane active" id="category">
                 <ul>
                   {% for i in category %}
-                      <li class="cat-item"><a href="{% url 'all_category' request2=i.name %}">{{ i.name }}</a></li>
+                      <li class="cat-item"><a href="{% url 'all_category' request2=i.name %}">{{ i.name | capfirst }}</a></li>
                   {% endfor %}
                 </ul>
               </div>

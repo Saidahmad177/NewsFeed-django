@@ -34,12 +34,12 @@
 
                 {% if form.errors %}
                   <div class="alert alert-danger" role="alert">
-                    Please correct value
+                    Please enter a  correct value!
                   </div>
                 {% endif %}
 
                 <div class="tab-pane fade show" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                  <form method="post"> {% csrf_token %}
+                  <form method="post" enctype="multipart/form-data"> {% csrf_token %}
                     <!-- Name input -->
                     <div class="form-outline mb-4">
                       <input type="text" id="firs_name" class="form-control" name="first_name" placeholder="Name..."/>
@@ -64,6 +64,10 @@
                     <div class="form-outline mb-4">
                       <input type="password" id="registerPassword2" class="form-control" name="password2" placeholder="Confirm password..."/>
                     </div>
+
+                      <div class="form-outline mb-4">
+                          <input type="file" class="form-control" name="user_image">
+                      </div>
 
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block mb-3">Sign Up</button>

@@ -2,10 +2,12 @@
 
 {% block content %}
 
-      <form class="form-horizontal" method="post"> {% csrf_token %}
+      <form class="form-horizontal" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
     <!-- Form Name -->
     <h3 style="margin-top: 20px;">MY profile</h3>
+
+      <img src="{{ p_image.user_image }}" alt="">
 
       {% if success_message %}
           <div class="alert alert-success forma" role="alert">
@@ -49,12 +51,19 @@
       </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textinput">Image</label>
+        <div class="col-md-4 forma">
+            <input id="textinput" name="user_image" type="file" class="form-control input-md" value="{{ p_image.user_image }}">
+        </div>
+    </div>
+
     <!-- Button -->
     <div class="form-group">
       <label class="col-md-4 control-label" for="singlebutton"></label>
       <div class="col-md-4">
         <button id="singlebutton" type="submit" class="btn btn-primary">submit</button>
-          <a style="color: blue; margin-left: 140px;" href="{% url 'password_change' %}">Password change</a>
+          <a style="color: blue; margin-left: 100px;" href="{% url 'password_change' %}">Password change</a>
       </div>
     </div>
     </form>
