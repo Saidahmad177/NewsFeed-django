@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from firstapp.models import Contact, AllUser
+from firstapp.models import Contact, AllUser, Comments
 
 
 class FormContact(forms.ModelForm):
@@ -8,3 +8,8 @@ class FormContact(forms.ModelForm):
         model = Contact
         fields = ['name', 'email', 'message']
 
+
+class CommentsForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['body']

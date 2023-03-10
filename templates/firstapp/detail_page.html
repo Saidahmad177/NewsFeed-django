@@ -28,31 +28,68 @@
 
             <div class="single_page_content"> <img class="img-center" src="{{ data.image.url }}" alt="">
               <p>{{ data.body }}</p>
-              <blockquote> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque adipiscing, neque ut pulvinar tincidunt, est sem euismod odio, eu ullamcorper turpis nisl sit amet velit. Nullam vitae nibh odio, non scelerisque nibh. Vestibulum ut est augue, in varius purus. </blockquote>
-              <ul>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-              </ul>
-              <h2>This is h2 title</h2>
-              <h3>This is h3 title</h3>
-              <h4>This is h4 title</h4>
-              <h5>This is h5 title</h5>
-              <h6>This is h6 Title</h6>
+{#              <blockquote> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque adipiscing, neque ut pulvinar tincidunt, est sem euismod odio, eu ullamcorper turpis nisl sit amet velit. Nullam vitae nibh odio, non scelerisque nibh. Vestibulum ut est augue, in varius purus. </blockquote>#}
+{#              <ul>#}
+{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
+{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
+{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
+{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
+{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
+{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
+{#              </ul>#}
 
 
-              <button class="btn default-btn">Default</button>
-              <button class="btn btn-red">Red Button</button>
-              <button class="btn btn-yellow">Yellow Button</button>
-              <button class="btn btn-green">Green Button</button>
-              <button class="btn btn-black">Black Button</button>
-              <button class="btn btn-orange">Orange Button</button>
-              <button class="btn btn-blue">Blue Button</button>
-              <button class="btn btn-lime">Lime Button</button>
-              <button class="btn btn-theme">Theme Button</button>
+            <div class="panel panel-default widget">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <h3 class="panel-title">
+                        Recent Comments</h3>
+                    <span class="label label-info">
+                        {{ comment_count }} comments</span>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {% for comment in comments %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-1">
+                                        <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>
+                                    <div class="col-xs-10 col-md-11">
+                                            <div class="mic-info ">
+                                                By: <b class="text-primary">{{ comment.user }}</b> on {{ comment.created_time }}
+                                            </div>
+                                        <br>
+                                        <div class="comment-text">
+                                            {{ comment.body }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+    {#                <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>#}
+                </div>
+            </div>
+
+            <h4>Leave a Comment</h4>
+
+                    <form class="contact_form" method="post">{% csrf_token %}
+                      <textarea class="form-control" cols="10" rows="5" placeholder="Message" name="body" required="required"></textarea>
+                      <input type="submit" value="Send Message">
+                    </form>
+
+
+
+
+{#              <button class="btn default-btn">Default</button>#}
+{#              <button class="btn btn-red">Red Button</button>#}
+{#              <button class="btn btn-yellow">Yellow Button</button>#}
+{#              <button class="btn btn-green">Green Button</button>#}
+{#              <button class="btn btn-black">Black Button</button>#}
+{#              <button class="btn btn-orange">Orange Button</button>#}
+{#              <button class="btn btn-blue">Blue Button</button>#}
+{#              <button class="btn btn-lime">Lime Button</button>#}
+{#              <button class="btn btn-theme">Theme Button</button>#}
             </div>
             <div class="social_link">
               <ul class="sociallink_nav">

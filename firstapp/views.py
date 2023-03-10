@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-
+from users.models import Profile
 from firstapp.models import NewsBase, Category, AllUser
-from firstapp.forms import FormContact
+from firstapp.forms import FormContact, CommentsForm
 
 from django.views.generic import ListView, TemplateView, DeleteView, UpdateView, CreateView
 from news.custom_permisson import OnlyLoggedSuperUser, PermissionUser
@@ -115,14 +115,43 @@ def page_404(request):
 
 
 # This is detail page View
-def detail_page(request, news, category_name):
-    user = request.user
-    if request.method == 'GET':
-        data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
-        context = {
-            'data': data,
-            'user': user,
-        }
-        print(data.category)
-        return render(request, 'firstapp/detail_page.html', context)
 
+
+def detail_page(request, news, category_name):
+
+    data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
+    comments = data.comments.filter(active=True)
+    comment_count = comments.count()
+
+    if request.method == 'POST':
+        comment_form = CommentsForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.news = data
+            new_comment.user = request.user
+            new_comment.save()
+
+    else:
+        comment_form = CommentsForm()
+
+    context = {
+        'data': data,
+        'comments': comments,
+        'comment_form': comment_form,
+        'comment_count': comment_count,
+
+    }
+    print(data.category)
+    return render(request, 'firstapp/detail_page.html', context)
+
+# it's with make function view
+# def detail_page(request, news, category_name):
+#     user = request.user
+#     if request.method == 'GET':
+#         data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
+#         context = {
+#             'data': data,
+#             'user': user,
+#         }
+#         print(data.category)
+#         return render(request, 'firstapp/detail_page.html', context)
