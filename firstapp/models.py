@@ -37,6 +37,8 @@ class NewsBase(models.Model):
                               default=Status.draft
                               )
 
+    view_count = models.IntegerField(default=0)
+
     objects = models.Manager()
     published = PublishedManager()
 

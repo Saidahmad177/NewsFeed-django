@@ -45,10 +45,10 @@ class CommentModel(admin.ModelAdmin):
     actions = ['disable_comments', 'enable_comments']
 
     def disable_comments(self, request, queryset):
-        return queryset.update(activate=False)
+        return queryset.update(active=False)
 
-    def enable_comments(self, requst, queryset):
-        return queryset.update(activate=True)
+    def enable_comments(self, request, queryset):
+        return queryset.update(active=True)
 
 
 admin.site.register(Comments, CommentModel)

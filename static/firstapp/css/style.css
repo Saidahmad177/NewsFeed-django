@@ -282,6 +282,26 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .contact_form input[type="text"], .contact_form input[type="email"], .contact_form textarea{border-radius:0; margin-bottom:30px}
 .contact_form input[type="submit"]{border:medium none; color:#fff; height:35px; padding:5px 10px; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .contact_form input[type="submit"]:hover{border:1px solid #d083cf}
+
+/*search styles*/
+ body{margin-top:20px;background-color: #eee;}
+.search-results-count {margin-top: 10px;}
+.search-result-item {padding: 20px;background-color: #fff;border-radius: 4px}
+.search-result-item:after,
+.search-result-item:before {content: " ";display: table}
+.search-result-item:after {clear: both}
+.search-result-item .image-link {display: block;overflow: hidden;border-top-left-radius: 4px;border-bottom-left-radius: 4px}
+@media (min-width:768px) {  .search-result-item .image-link {display: inline-block;margin: -20px 0 -20px -20px;float: left;width: 200px}  }
+@media (max-width:767px) {  .search-result-item .image-link {max-height: 200px}  }
+.search-result-item .image {max-width: 100%}
+.search-result-item .info {margin-top: 2px;font-size: 12px;color: #999}
+.search-result-item .description {font-size: 13px}
+.search-result-item+.search-result-item {margin-top: 20px}
+@media (min-width:768px) {.search-result-item-body {margin-left: 200px}}
+.search-result-item-heading {font-weight: 400}
+.search-result-item-heading>a {color: #555}
+@media (min-width:768px) {.search-result-item-heading {margin: 0}}
+
 @media(max-width:1199px ){.logo_area{width:34%}.add_banner{width:580px}.nav-tabs > li{width:32.3%}.photograph_nav li{width:31.5%}}
 @media(max-width:991px ){.add_banner{display:none}.logo_area{width:100%}.nav > li > a{padding:8px 8px}.latest_post_container{height:380px;overflow:hidden}#next-button{bottom:-2px}.single_iteam{height:415px}.photograph_nav li{width:47.7%}.related_post .spost_nav li{width:100%}.nav-tabs > li{width:31.9%}.nav-tabs > li > a{font-size:13px;padding-left:0 !important;padding-right:0 !important;text-align:center}}
 @media(max-width:767px ){.navbar-collapse{padding-left:15px}.mobile-show{display:block}.desktop-home{display:none}.navbar-inverse .navbar-nav > li > a{display:block}.header_top_left{width:100%}.header_top_right > p{display:none}.social_area{display:none} .header_top_login > p{display:none}.social_area{display:none} .single_iteam a{height:100%}.single_iteam a > img{height:100%}.error_page > a{margin-bottom:25px}.nav-tabs > li{width:32.6%}}

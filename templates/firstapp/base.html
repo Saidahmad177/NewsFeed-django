@@ -40,10 +40,11 @@
             </ul>
 
           </div>
-
+            <form action="{% url 'search' %}" method="get">
           <div class="form-outline mb-4 header_top_search">
-            <input type="search" class="form-control" id="datatable-search-input" placeholder="Search...">
+            <input type="search" class="form-control" id="datatable-search-input" placeholder="Search..." name="q">
           </div>
+            </form>
 
           <div class="header_top_login"><p><a href="{% url 'logout' %}">Logout</a><a href="{% url 'profile' %}">Profile</a></p></div>
 

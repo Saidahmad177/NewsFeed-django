@@ -2,7 +2,7 @@ from django.urls import path
 
 # with function
 from firstapp.views import HomePage, ContactPage, detail_page, page_404, \
-    Global, Update, Delete, Create
+    Global, Update, Delete, Create, search
 
 from django.contrib.auth.views import LoginView, LogoutView
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path('create/', Create.as_view(), name='create'),
     path('contact/', ContactPage.as_view(), name='contact'),
     path('error-404/', page_404, name='page_404'),
+    path('search/', search, name='search'),
     path('<slug>/edit/', Update.as_view(), name='update'),
     path('<slug>/delete/', Delete.as_view(), name='delete'),
     path('<str:request2>/', Global.as_view(), name='all_category'),

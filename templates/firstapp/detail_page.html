@@ -1,5 +1,6 @@
 {% extends 'firstapp/base.html' %}
 {% load static %}
+{% load hitcount_tags %}
 
 {% block title %} {{ data.title }} {% endblock %}
 {% block content %}
@@ -18,6 +19,7 @@
               <span><i class="fa fa-user"></i></span>
               <span><i class="fa fa-calendar"></i>{{ data.publish_time }}</span>
               <a href="{% url 'all_category' request2=data.category %}"><i class="fa fa-tags"></i>{{ data.category | capfirst }}</a>
+                <span><i class="fa fa-eye"></i>{% get_hit_count for data %}</span>
               {% if user.is_superuser %}
                   <div style="float:right;">
                 <a href="{% url 'update' data.slug %}"style="margin-right: 15px;"><i class="fa fa-pencil" ></i>Edit</a>
@@ -28,17 +30,8 @@
 
             <div class="single_page_content"> <img class="img-center" src="{{ data.image.url }}" alt="">
               <p>{{ data.body }}</p>
-{#              <blockquote> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque adipiscing, neque ut pulvinar tincidunt, est sem euismod odio, eu ullamcorper turpis nisl sit amet velit. Nullam vitae nibh odio, non scelerisque nibh. Vestibulum ut est augue, in varius purus. </blockquote>#}
-{#              <ul>#}
-{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
-{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
-{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
-{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
-{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
-{#                <li>Nullam vitae nibh odio, non scelerisque nibh</li>#}
-{#              </ul>#}
 
-
+{#            Here are all comments #}
             <div class="panel panel-default widget">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-comment"></span>
@@ -71,13 +64,13 @@
                 </div>
             </div>
 
+{#       -----Leave comment part-----#}
             <h4>Leave a Comment</h4>
 
                     <form class="contact_form" method="post">{% csrf_token %}
                       <textarea class="form-control" cols="10" rows="5" placeholder="Message" name="body" required="required"></textarea>
                       <input type="submit" value="Send Message">
                     </form>
-
 
 
 
@@ -137,26 +130,13 @@
           <div class="single_sidebar">
             <h2><span>Popular Post</span></h2>
             <ul class="spost_nav">
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                </div>
-              </li>
+              {% for i in latest_post  %}
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="" class="media-left"> <img alt="" src=""> </a>
+                      <div class="media-body"> <a href="" class="catg_title">{{ i.title }}</a></div>
+                    </div>
+                  </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="single_sidebar">
@@ -222,7 +202,7 @@
               <li><a href="#">Blog</a></li>
               <li><a href="#">Rss Feed</a></li>
               <li><a href="#">Login</a></li>
-              <li><a href="#">Life &amp; Style</a></li>
+              <li><a href="#">Life & Style</a></li>
             </ul>
           </div>
         </aside>

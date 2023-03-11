@@ -1,0 +1,47 @@
+{% extends 'firstapp/base.html' %}
+
+{% block content %}
+
+<div style="margin-top: 30px;">
+    <h4 class="search-results-count" >About: {{ search_result_count }} results for your search...</h4>
+</div>
+
+{% for result in search_result %}
+    <div style="margin-bottom: 15px; margin-top: 15px;">
+        <section class="search-result-item">
+            <a class="image-link" href="{% url 'detail_page' result.category result.slug %}"><img class="image" src="{{ result.image.url }}">
+            </a>
+            <div class="search-result-item-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h4 class="search-result-item-heading"><a href="{% url 'detail_page' result.category result.slug %}">{{ result.title }}</a></h4>
+                        <p class="info">{{ result.publish_time }}</p>
+                        <p class="description">{{ result.body | truncatewords:20 }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endfor %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,13 @@
+import hitcount.models
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from hitcount.utils import get_hitcount_model
+from hitcount.views import HitCountMixin
+from hitcount.models import HitCount
+
 from users.models import Profile
 from firstapp.models import NewsBase, Category, AllUser
 from firstapp.forms import FormContact, CommentsForm
@@ -109,7 +115,7 @@ class ContactPage(View):
                 return render(request, 'firstapp/contact.html', {'error_message': True})
 
 
-# This is 404 page View
+# This is 404-page View
 def page_404(request):
     return render(request, '404.html')
 
@@ -118,10 +124,24 @@ def page_404(request):
 
 
 def detail_page(request, news, category_name):
-
     data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
     comments = data.comments.filter(active=True)
     comment_count = comments.count()
+
+    context = {}
+    # hitcount logic
+    hit_count = get_hitcount_model().objects.get_for_object(data)
+    hits = hit_count.hits
+    hitcontext = context['hitcount'] = {'pk': hit_count.pk}
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+    if hit_count_response.hit_counted:
+
+        hits = hits + 1
+        hitcontext['hit_counted'] = hit_count_response.hit_counted
+        hitcontext['hit_message'] = hit_count_response.hit_message
+        hitcontext['total_hits'] = hits
+
+    latest_post = NewsBase.published.all().order_by('-publish_time')
 
     if request.method == 'POST':
         comment_form = CommentsForm(data=request.POST)
@@ -139,12 +159,14 @@ def detail_page(request, news, category_name):
         'comments': comments,
         'comment_form': comment_form,
         'comment_count': comment_count,
+        'latest_post': latest_post,
 
     }
     print(data.category)
     return render(request, 'firstapp/detail_page.html', context)
 
-# it's with make function view
+
+# it's with make detail_page function view
 # def detail_page(request, news, category_name):
 #     user = request.user
 #     if request.method == 'GET':
@@ -155,3 +177,18 @@ def detail_page(request, news, category_name):
 #         }
 #         print(data.category)
 #         return render(request, 'firstapp/detail_page.html', context)
+
+
+def search(request):
+    query = request.GET.get('q')
+
+    search_base = NewsBase
+    search_result = NewsBase.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+    search_result_count = search_result.count()
+    context = {
+        'search_bas': search_base,
+        'search_result': search_result,
+        'search_result_count': search_result_count,
+
+    }
+    return render(request, 'firstapp/search.html', context)
