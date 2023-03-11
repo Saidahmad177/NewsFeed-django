@@ -1,4 +1,5 @@
 import hitcount.models
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -37,7 +38,7 @@ class HomePage(LoginRequiredMixin, ListView):
 
 
 # This is all Category View
-class Global(TemplateView):
+class Global(LoginRequiredMixin, TemplateView):
     template_name = 'firstapp/categorys.html'
 
     def get_context_data(self, **kwargs):
@@ -94,7 +95,7 @@ class Delete(DeleteView):
 
 
 # This is Contact page View
-class ContactPage(View):
+class ContactPage(LoginRequiredMixin, View):
     template_name = 'firstapp/contact.html'
 
     def get(self, request, *args, **kwargs):
@@ -115,6 +116,7 @@ class ContactPage(View):
                 return render(request, 'firstapp/contact.html', {'error_message': True})
 
 
+@login_required()
 # This is 404-page View
 def page_404(request):
     return render(request, '404.html')
@@ -123,6 +125,7 @@ def page_404(request):
 # This is detail page View
 
 
+@login_required
 def detail_page(request, news, category_name):
     data = get_object_or_404(NewsBase, slug=news, category__name=category_name, status=NewsBase.Status.published)
     comments = data.comments.filter(active=True)
@@ -141,7 +144,8 @@ def detail_page(request, news, category_name):
         hitcontext['hit_message'] = hit_count_response.hit_message
         hitcontext['total_hits'] = hits
 
-    latest_post = NewsBase.published.all().order_by('-publish_time')
+    # latest data for latest post
+    latest_post = NewsBase.published.all().order_by('-publish_time')[:5]
 
     if request.method == 'POST':
         comment_form = CommentsForm(data=request.POST)
@@ -179,6 +183,7 @@ def detail_page(request, news, category_name):
 #         return render(request, 'firstapp/detail_page.html', context)
 
 
+@login_required()
 def search(request):
     query = request.GET.get('q')
 

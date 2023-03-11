@@ -148,6 +148,7 @@ def password_chang(request):
     return render(request, 'users/password_chad.html')
 
 
+@login_required()
 # password change
 def password_change(request):
     error_message = None
