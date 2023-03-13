@@ -186,7 +186,6 @@ def detail_page(request, news, category_name):
 @login_required()
 def search(request):
     query = request.GET.get('q')
-
     search_base = NewsBase
     search_result = NewsBase.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
     search_result_count = search_result.count()
@@ -197,3 +196,18 @@ def search(request):
 
     }
     return render(request, 'firstapp/search.html', context)
+
+
+# search view with class
+# class search(ListView):
+#     model = NewsBase
+#     template_name = 'firstapp/search.html'
+#     context_object_name = 'data_c'
+#
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         return NewsBase.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+
+
+def ftest(request):
+    return render(request, 'firstapp/tests.html')

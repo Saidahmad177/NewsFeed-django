@@ -9,12 +9,12 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="slick_slider">
             {% for i in newsbase %}
-          <div class="single_iteam"> <a href="{% url 'detail_page' i.category i.slug %}"> <img src="{{ i.image.url }}" alt=""></a>
-            <div class="slider_article">
-              <h2><a class="slider_tittle" href="{% url 'detail_page' i.category i.slug %}">{{ i.title }}</a></h2>
-              <p>{{ i.body | truncatewords:11 }}</p>
-            </div>
-          </div>
+              <div class="single_iteam"> <a href="{% url 'detail_page' i.category i.slug %}"> <img src="{{ i.image.url }}" alt=""></a>
+                <div class="slider_article">
+                  <h2><a class="slider_tittle" href="{% url 'detail_page' i.category i.slug %}">{{ i.title }}</a></h2>
+                  <p>{{ i.body | truncatewords:11 }}</p>
+                </div>
+              </div>
             {% endfor %}
         </div>
       </div>
