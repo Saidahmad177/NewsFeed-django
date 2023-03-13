@@ -179,7 +179,7 @@
                   {% if forloop.first %}
                     <li>
                       <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="{% url 'detail_page' sport.category sport.slug %}"> <img src="{{ sport.image.url }}" alt=""> <span class="overlay"></span> </a>
-                        <figcaption> <a href="{% url 'detail_page' sport.category sport.slug %}">{{ sport.title }}</a> </figcaption>
+                        <figcaption> <a href="{% url 'detail_page' sport.category sport.slug %}">{{ sport.title }}</a></figcaption>
                         <p>{{ sport.body | truncatewords:10 }}</p>
                       </figure>
                     </li>
