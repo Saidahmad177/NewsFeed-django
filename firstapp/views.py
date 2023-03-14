@@ -51,7 +51,6 @@ class Global(LoginRequiredMixin, TemplateView):
 
         return context
 
-
 # class Global(ListView):
 #     category_model = NewsBase
 #     template_name = 'firstapp/update.html'
@@ -138,7 +137,6 @@ def detail_page(request, news, category_name):
     hitcontext = context['hitcount'] = {'pk': hit_count.pk}
     hit_count_response = HitCountMixin.hit_count(request, hit_count)
     if hit_count_response.hit_counted:
-
         hits = hits + 1
         hitcontext['hit_counted'] = hit_count_response.hit_counted
         hitcontext['hit_message'] = hit_count_response.hit_message
